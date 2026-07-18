@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>e-Calih | Pencarian Data Pemilih</title>
+
+    <link rel="stylesheet" href="css/style.css" />
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+    />
+  </head>
+
+  <body class="dashboard-body">
+    <header class="header">
+      <div class="logo-header">
+        <i class="fa-solid fa-users"></i>
+
+        <span>e-Calih</span>
+      </div>
+
+      <button class="logout-btn" onclick="window.location.href = 'index.html'">
+        <i class="fa-solid fa-arrow-left"></i>
+
+        Kembali
+      </button>
+    </header>
+
+    <main class="container">
+      <div class="card total-card">
+        <h2>Pencarian Data Calon Pemilih</h2>
+
+        <p>Cari berdasarkan Nama atau NIK</p>
+      </div>
+
+      <div class="search-box">
+        <input
+          type="text"
+          id="searchInput"
+          placeholder="Masukkan Nama atau NIK"
+        />
+      </div>
+
+      <div id="dataList"></div>
+    </main>
+
+    <script src="js/api.js"></script>
+
+    <script src="js/user.js"></script>
+  </body>
+</html>

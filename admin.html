@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard Admin | e-Calih</title>
+
+    <link rel="stylesheet" href="css/style.css" />
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+    />
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  </head>
+
+  <body class="dashboard-body">
+    <header class="header">
+      <div class="logo-header">
+        <i class="fa-solid fa-users"></i>
+
+        <span>e-Calih</span>
+      </div>
+
+      <button id="logoutBtn" class="logout-btn">
+        <i class="fa-solid fa-right-from-bracket"></i>
+
+        Logout
+      </button>
+    </header>
+
+    <main class="container">
+      <div class="card total-card">
+        <h3>Total Data Pemilih</h3>
+
+        <h1 id="totalData">0</h1>
+      </div>
+
+      <div class="search-box">
+        <input type="text" id="searchInput" placeholder="Cari Nama / NIK" />
+      </div>
+
+      <div class="button-area">
+        <button id="addBtn" class="btn-green">
+          <i class="fa-solid fa-plus"></i>
+
+          Tambah Data
+        </button>
+      </div>
+
+      <div id="dataList"></div>
+    </main>
+
+    <!-- ================= MODAL ================= -->
+
+    <div id="modalForm" class="modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 id="modalTitle">Tambah Data</h2>
+
+          <span id="closeModal">&times;</span>
+        </div>
+
+        <input type="hidden" id="id" />
+
+        <div class="form-grid">
+          <input type="text" id="nama" placeholder="Nama" />
+
+          <input type="text" id="nik" placeholder="NIK" />
+
+          <input type="text" id="rt" placeholder="RT" />
+
+          <input type="text" id="rw" placeholder="RW" />
+
+          <input type="text" id="dusun" placeholder="Dusun" />
+
+          <input type="text" id="desa" placeholder="Desa" />
+
+          <input type="text" id="kecamatan" placeholder="Kecamatan" />
+
+          <input type="text" id="kabupaten" placeholder="Kabupaten" />
+
+          <input type="text" id="unsur" placeholder="Unsur" />
+        </div>
+
+        <button id="saveBtn" class="btn-save">Simpan Data</button>
+      </div>
+    </div>
+
+    <script src="js/api.js"></script>
+
+    <script src="js/admin.js"></script>
+  </body>
+</html>
