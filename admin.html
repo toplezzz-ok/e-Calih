@@ -3,24 +3,34 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
     <title>Dashboard Admin | e-Calih</title>
 
+    <!-- CSS -->
     <link rel="stylesheet" href="css/style.css" />
 
+    <!-- Google Font -->
     <link
       href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
       rel="stylesheet"
     />
 
+    <!-- Font Awesome -->
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
     />
 
+    <!-- SweetAlert -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   </head>
 
   <body class="dashboard-body">
+    <!-- ================= HEADER ================= -->
+
     <header class="header">
       <div class="logo-header">
         <i class="fa-solid fa-users"></i>
@@ -35,16 +45,92 @@
       </button>
     </header>
 
+    <!-- ================= MAIN ================= -->
+
     <main class="container">
+      <!-- ================= TOTAL DATA ================= -->
+
       <div class="card total-card">
         <h3>Total Data Pemilih</h3>
 
         <h1 id="totalData">0</h1>
       </div>
 
+      <!-- ================= STATISTIK KABUPATEN ================= -->
+
+      <div class="card statistik-card">
+        <h2 class="statistik-title">
+          <i class="fa-solid fa-chart-pie"></i>
+
+          Statistik Data Per Kabupaten
+        </h2>
+
+        <!-- ================= KARTU KABUPATEN ================= -->
+
+        <div class="kabupaten-stats">
+          <!-- NGANJUK -->
+
+          <div class="kabupaten-box">
+            <div class="kabupaten-icon">
+              <i class="fa-solid fa-location-dot"></i>
+            </div>
+
+            <div>
+              <h4>Kabupaten Nganjuk</h4>
+
+              <h2 id="nganjukTotal">0</h2>
+
+              <span>Data Pemilih</span>
+            </div>
+          </div>
+
+          <!-- KABUPATEN MADIUN -->
+
+          <div class="kabupaten-box">
+            <div class="kabupaten-icon">
+              <i class="fa-solid fa-location-dot"></i>
+            </div>
+
+            <div>
+              <h4>Kabupaten Madiun</h4>
+
+              <h2 id="kabMadiunTotal">0</h2>
+
+              <span>Data Pemilih</span>
+            </div>
+          </div>
+
+          <!-- KOTA MADIUN -->
+
+          <div class="kabupaten-box">
+            <div class="kabupaten-icon">
+              <i class="fa-solid fa-location-dot"></i>
+            </div>
+
+            <div>
+              <h4>Kota Madiun</h4>
+
+              <h2 id="kotaMadiunTotal">0</h2>
+
+              <span>Data Pemilih</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- ================= DIAGRAM ================= -->
+
+        <div class="chart-container">
+          <canvas id="kabupatenChart"></canvas>
+        </div>
+      </div>
+
+      <!-- ================= SEARCH ================= -->
+
       <div class="search-box">
         <input type="text" id="searchInput" placeholder="Cari Nama / NIK" />
       </div>
+
+      <!-- ================= BUTTON ================= -->
 
       <div class="button-area">
         <button id="addBtn" class="btn-green">
@@ -54,6 +140,8 @@
         </button>
       </div>
 
+      <!-- ================= DATA LIST ================= -->
+
       <div id="dataList"></div>
     </main>
 
@@ -61,13 +149,19 @@
 
     <div id="modalForm" class="modal">
       <div class="modal-content">
+        <!-- MODAL HEADER -->
+
         <div class="modal-header">
           <h2 id="modalTitle">Tambah Data</h2>
 
-          <span id="closeModal">&times;</span>
+          <span id="closeModal"> &times; </span>
         </div>
 
+        <!-- ID -->
+
         <input type="hidden" id="id" />
+
+        <!-- FORM -->
 
         <div class="form-grid">
           <input type="text" id="nama" placeholder="Nama" />
@@ -84,14 +178,18 @@
 
           <input type="text" id="kecamatan" placeholder="Kecamatan" />
 
-          <input type="text" id="kabupaten" placeholder="Kabupaten" />
+          <input type="text" id="kabupaten" placeholder="Kabupaten/Kota" />
 
           <input type="text" id="unsur" placeholder="Unsur" />
         </div>
 
+        <!-- SAVE -->
+
         <button id="saveBtn" class="btn-save">Simpan Data</button>
       </div>
     </div>
+
+    <!-- ================= JAVASCRIPT ================= -->
 
     <script src="js/api.js"></script>
 

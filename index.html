@@ -1,98 +1,130 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="id">
+  <head>
+    <meta charset="UTF-8" />
 
-<head>
-
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <title>e-Calih</title>
 
-    <link rel="stylesheet" href="css/style.css">
+    <!-- CSS UTAMA -->
 
-    <!-- Google Font -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
-        rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css" />
 
-    <!-- Font Awesome -->
-    <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <!-- GOOGLE FONT -->
 
-    <!-- Sweet Alert -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- FONT AWESOME -->
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+    />
+
+    <!-- SWEET ALERT -->
+
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  </head>
 
-</head>
-
-<body>
+  <body class="login-body">
+    <!-- ======================================
+         LOGIN CONTAINER
+    ======================================= -->
 
     <div class="login-container">
+      <!-- ==================================
+             LOGIN CARD
+        =================================== -->
 
-        <div class="login-card">
+      <div class="login-card">
+        <!-- ==================================
+                 LOGO
+            =================================== -->
 
-            <div class="logo">
+        <div class="login-logo">
+          <div class="logo-circle">
+            <i class="fa-solid fa-users"></i>
+          </div>
 
-                <div class="logo-circle">
-                    <i class="fa-solid fa-users"></i>
-                </div>
+          <h1>e-Calih</h1>
 
-                <h1>e-Calih</h1>
-
-                <p>Electronic Calon Pemilih</p>
-
-            </div>
-
-            <div class="form-group">
-
-                <label>Username</label>
-
-                <input
-                    type="text"
-                    id="username"
-                    placeholder="Masukkan Username">
-
-            </div>
-
-            <div class="form-group">
-
-                <label>Password</label>
-
-                <input
-                    type="password"
-                    id="password"
-                    placeholder="Masukkan Password">
-
-            </div>
-
-            <button id="loginBtn" class="btn-login">
-
-                <i class="fa-solid fa-right-to-bracket"></i>
-
-                LOGIN ADMIN
-
-            </button>
-
-            <div class="divider">
-
-                <span>ATAU</span>
-
-            </div>
-
-            <button id="userBtn" class="btn-user">
-
-                <i class="fa-solid fa-user"></i>
-
-                MASUK SEBAGAI USER
-
-            </button>
-
+          <p>Electronic Calon Pemilih</p>
         </div>
 
+        <!-- ==================================
+                 FORM LOGIN
+            =================================== -->
+
+        <div class="login-form">
+          <!-- USERNAME -->
+
+          <div class="form-group">
+            <label for="username"> Username </label>
+
+            <input
+              type="text"
+              id="username"
+              placeholder="Masukkan Username"
+              autocomplete="username"
+            />
+          </div>
+
+          <!-- PASSWORD -->
+
+          <div class="form-group">
+            <label for="password"> Password </label>
+
+            <input
+              type="password"
+              id="password"
+              placeholder="Masukkan Password"
+              autocomplete="current-password"
+            />
+          </div>
+
+          <!-- LOGIN ADMIN -->
+
+          <button id="loginBtn" class="login-btn" type="button">
+            <i class="fa-solid fa-right-to-bracket"></i>
+
+            LOGIN ADMIN
+          </button>
+        </div>
+
+        <!-- ==================================
+                 PEMISAH
+            =================================== -->
+
+        <div class="divider">
+          <span> ATAU </span>
+        </div>
+
+        <!-- ==================================
+                 USER
+            =================================== -->
+
+        <button id="userBtn" class="btn-user" type="button">
+          <i class="fa-solid fa-user"></i>
+
+          MASUK SEBAGAI USER
+        </button>
+      </div>
     </div>
+
+    <!-- ======================================
+         API JS
+    ======================================= -->
 
     <script src="js/api.js"></script>
 
+    <!-- ======================================
+         LOGIN JS
+    ======================================= -->
+
     <script src="js/login.js"></script>
-
-</body>
-
+  </body>
 </html>

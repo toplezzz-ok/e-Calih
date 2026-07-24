@@ -2,17 +2,21 @@
 <html lang="id">
   <head>
     <meta charset="UTF-8" />
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <title>e-Calih | Pencarian Data Pemilih</title>
+    <title>e-Calih | Data Calon Pemilih</title>
 
+    <!-- CSS -->
     <link rel="stylesheet" href="css/style.css" />
 
+    <!-- GOOGLE FONT -->
     <link
       href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
       rel="stylesheet"
     />
 
+    <!-- FONT AWESOME -->
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
@@ -20,12 +24,20 @@
   </head>
 
   <body class="dashboard-body">
+    <!-- ======================================
+         HEADER
+    ======================================= -->
+
     <header class="header">
+      <!-- LOGO -->
+
       <div class="logo-header">
         <i class="fa-solid fa-users"></i>
 
         <span>e-Calih</span>
       </div>
+
+      <!-- KEMBALI -->
 
       <button class="logout-btn" onclick="window.location.href = 'index.html'">
         <i class="fa-solid fa-arrow-left"></i>
@@ -34,12 +46,106 @@
       </button>
     </header>
 
-    <main class="container">
-      <div class="card total-card">
-        <h2>Pencarian Data Calon Pemilih</h2>
+    <!-- ======================================
+         MAIN
+    ======================================= -->
 
-        <p>Cari berdasarkan Nama atau NIK</p>
+    <main class="container">
+      <!-- ======================================
+           TOTAL DATA
+      ======================================= -->
+
+      <div class="card total-card">
+        <h3>Total Data Calon Pemilih</h3>
+
+        <h1 id="totalData">0</h1>
       </div>
+
+      <!-- ======================================
+           STATISTIK WILAYAH
+      ======================================= -->
+
+      <div class="card statistik-card">
+        <!-- JUDUL -->
+
+        <h2 class="statistik-title">
+          <i class="fa-solid fa-chart-pie"></i>
+
+          Statistik Data Per Kabupaten
+        </h2>
+
+        <!-- ======================================
+             KARTU STATISTIK
+        ======================================= -->
+
+        <div class="kabupaten-stats">
+          <!-- ==================================
+               KABUPATEN NGANJUK
+          =================================== -->
+
+          <div class="kabupaten-box">
+            <div class="kabupaten-icon">
+              <i class="fa-solid fa-location-dot"></i>
+            </div>
+
+            <div>
+              <h4>Kabupaten Nganjuk</h4>
+
+              <h2 id="nganjukTotal">0</h2>
+
+              <span> Data Pemilih </span>
+            </div>
+          </div>
+
+          <!-- ==================================
+               KABUPATEN MADIUN
+          =================================== -->
+
+          <div class="kabupaten-box">
+            <div class="kabupaten-icon">
+              <i class="fa-solid fa-location-dot"></i>
+            </div>
+
+            <div>
+              <h4>Kabupaten Madiun</h4>
+
+              <h2 id="kabMadiunTotal">0</h2>
+
+              <span> Data Pemilih </span>
+            </div>
+          </div>
+
+          <!-- ==================================
+               KOTA MADIUN
+          =================================== -->
+
+          <div class="kabupaten-box">
+            <div class="kabupaten-icon">
+              <i class="fa-solid fa-location-dot"></i>
+            </div>
+
+            <div>
+              <h4>Kota Madiun</h4>
+
+              <h2 id="kotaMadiunTotal">0</h2>
+
+              <span> Data Pemilih </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- ======================================
+             DIAGRAM DONAT
+        ======================================= -->
+
+        <div class="chart-container">
+          <canvas id="kabupatenChart"></canvas>
+        </div>
+      </div>
+
+      <!-- ======================================
+           PENCARIAN
+      ======================================= -->
 
       <div class="search-box">
         <input
@@ -49,10 +155,28 @@
         />
       </div>
 
+      <!-- ======================================
+           DATA LIST
+      ======================================= -->
+
       <div id="dataList"></div>
     </main>
 
+    <!-- ======================================
+         CHART.JS
+    ======================================= -->
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- ======================================
+         API
+    ======================================= -->
+
     <script src="js/api.js"></script>
+
+    <!-- ======================================
+         USER JS
+    ======================================= -->
 
     <script src="js/user.js"></script>
   </body>
