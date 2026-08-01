@@ -5,7 +5,7 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <title>e-Calih | Data Calon Pemilih</title>
+    <title>e-Calih</title>
 
     <!-- CSS -->
     <link rel="stylesheet" href="css/style.css" />
@@ -21,6 +21,9 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
     />
+
+    <!-- CHART.JS -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   </head>
 
   <body class="dashboard-body">
@@ -29,19 +32,13 @@
     ======================================= -->
 
     <header class="header">
-      <!-- LOGO -->
-
       <div class="logo-header">
         <i class="fa-solid fa-users"></i>
-
         <span>e-Calih</span>
       </div>
 
-      <!-- KEMBALI -->
-
       <button class="logout-btn" onclick="window.location.href = 'index.html'">
         <i class="fa-solid fa-arrow-left"></i>
-
         Kembali
       </button>
     </header>
@@ -62,28 +59,25 @@
       </div>
 
       <!-- ======================================
-           STATISTIK WILAYAH
+           STATISTIK KABUPATEN
       ======================================= -->
 
       <div class="card statistik-card">
-        <!-- JUDUL -->
-
         <h2 class="statistik-title">
           <i class="fa-solid fa-chart-pie"></i>
-
           Statistik Data Per Kabupaten
         </h2>
 
-        <!-- ======================================
-             KARTU STATISTIK
-        ======================================= -->
+        <!-- KARTU KABUPATEN -->
 
         <div class="kabupaten-stats">
-          <!-- ==================================
-               KABUPATEN NGANJUK
-          =================================== -->
+          <!-- NGANJUK -->
 
-          <div class="kabupaten-box">
+          <div
+            class="kabupaten-box"
+            style="cursor: pointer"
+            onclick="bukaKabupaten('Kabupaten Nganjuk')"
+          >
             <div class="kabupaten-icon">
               <i class="fa-solid fa-location-dot"></i>
             </div>
@@ -95,13 +89,19 @@
 
               <span> Data Pemilih </span>
             </div>
+
+            <div class="kabupaten-arrow">
+              <i class="fa-solid fa-chevron-right"></i>
+            </div>
           </div>
 
-          <!-- ==================================
-               KABUPATEN MADIUN
-          =================================== -->
+          <!-- KABUPATEN MADIUN -->
 
-          <div class="kabupaten-box">
+          <div
+            class="kabupaten-box"
+            style="cursor: pointer"
+            onclick="bukaKabupaten('Kabupaten Madiun')"
+          >
             <div class="kabupaten-icon">
               <i class="fa-solid fa-location-dot"></i>
             </div>
@@ -113,13 +113,19 @@
 
               <span> Data Pemilih </span>
             </div>
+
+            <div class="kabupaten-arrow">
+              <i class="fa-solid fa-chevron-right"></i>
+            </div>
           </div>
 
-          <!-- ==================================
-               KOTA MADIUN
-          =================================== -->
+          <!-- KOTA MADIUN -->
 
-          <div class="kabupaten-box">
+          <div
+            class="kabupaten-box"
+            style="cursor: pointer"
+            onclick="bukaKabupaten('Kota Madiun')"
+          >
             <div class="kabupaten-icon">
               <i class="fa-solid fa-location-dot"></i>
             </div>
@@ -131,12 +137,14 @@
 
               <span> Data Pemilih </span>
             </div>
+
+            <div class="kabupaten-arrow">
+              <i class="fa-solid fa-chevron-right"></i>
+            </div>
           </div>
         </div>
 
-        <!-- ======================================
-             DIAGRAM DONAT
-        ======================================= -->
+        <!-- CHART -->
 
         <div class="chart-container">
           <canvas id="kabupatenChart"></canvas>
@@ -144,10 +152,90 @@
       </div>
 
       <!-- ======================================
-           PENCARIAN
+           STATISTIK KECAMATAN
       ======================================= -->
 
-      <div class="search-box">
+      <div
+        id="kecamatanSection"
+        class="card statistik-card"
+        style="display: none"
+      >
+        <div class="data-kecamatan-header">
+          <div>
+            <span> Statistik Wilayah </span>
+
+            <h2 id="namaKabupatenAktif">Kabupaten</h2>
+
+            <p>Pilih kecamatan untuk melihat data calon pemilih.</p>
+
+            <p>
+              Total Data Pemilih:
+              <strong id="totalKabupaten">0</strong>
+              Orang
+            </p>
+          </div>
+
+          <button id="kembaliKabupatenBtn" class="back-kabupaten-btn">
+            <i class="fa-solid fa-arrow-left"></i>
+
+            Kembali
+          </button>
+        </div>
+
+        <!-- KARTU KECAMATAN -->
+
+        <div id="kecamatanStats" class="kabupaten-stats"></div>
+
+        <!-- CHART KECAMATAN -->
+
+        <div class="chart-container">
+          <canvas id="kecamatanChart"></canvas>
+        </div>
+      </div>
+
+      <!-- ======================================
+           DATA PEMILIH KECAMATAN
+      ======================================= -->
+
+      <div
+        id="dataKecamatanSection"
+        class="card data-kecamatan-section"
+        style="display: none"
+      >
+        <div class="data-kecamatan-header">
+          <div>
+            <span> Data Pemilih </span>
+
+            <h2 id="judulKecamatan">Kecamatan</h2>
+          </div>
+
+          <button id="closeDataBtn" class="back-kabupaten-btn">
+            <i class="fa-solid fa-arrow-left"></i>
+
+            Kembali
+          </button>
+        </div>
+
+        <!-- SEARCH -->
+
+        <div class="search-box">
+          <input
+            type="text"
+            id="searchKecamatan"
+            placeholder="Cari Nama / NIK / No HP"
+          />
+        </div>
+
+        <!-- DATA LIST -->
+
+        <div id="dataKecamatanList"></div>
+      </div>
+
+      <!-- ======================================
+           PENCARIAN UMUM
+      ======================================= -->
+
+      <div id="searchGlobalSection" class="search-box">
         <input
           type="text"
           id="searchInput"
@@ -155,18 +243,8 @@
         />
       </div>
 
-      <!-- ======================================
-           DATA LIST
-      ======================================= -->
-
       <div id="dataList"></div>
     </main>
-
-    <!-- ======================================
-         CHART.JS
-    ======================================= -->
-
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <!-- ======================================
          API

@@ -1,0 +1,225 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Data Kecamatan e-Calih</title>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/style.css" />
+
+    <!-- Google Font -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Font Awesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+    />
+
+    <!-- SweetAlert -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  </head>
+
+  <body class="dashboard-body">
+    <!-- ================= HEADER ================= -->
+
+    <header class="header">
+      <div class="logo-header">
+        <i class="fa-solid fa-users"></i>
+
+        <span>e-Calih</span>
+      </div>
+
+      <button id="backBtn" class="logout-btn">
+        <i class="fa-solid fa-arrow-left"></i>
+
+        Kembali
+      </button>
+    </header>
+
+    <!-- ================= MAIN ================= -->
+
+    <main class="container">
+      <!-- ================= JUDUL ================= -->
+
+      <div class="card kecamatan-page-header">
+        <div>
+          <span class="kecamatan-label"> Statistik Wilayah </span>
+
+          <h1 id="namaKabupaten">Kabupaten</h1>
+
+          <p>Pilih kecamatan untuk melihat data calon pemilih.</p>
+
+          <p>
+            Total Data Pemilih:
+            <strong id="totalKabupaten">0</strong>
+            Orang
+          </p>
+        </div>
+      </div>
+
+      <!-- ================= STATISTIK KECAMATAN ================= -->
+
+      <div class="card statistik-card">
+        <h2 class="statistik-title">
+          <i class="fa-solid fa-chart-pie"></i>
+
+          Statistik Data Per Kecamatan
+        </h2>
+
+        <!-- ================= KARTU KECAMATAN ================= -->
+
+        <div id="kecamatanStats" class="kabupaten-stats">
+          <!-- Diisi otomatis oleh JavaScript -->
+        </div>
+
+        <!-- ================= CHART ================= -->
+
+        <div class="chart-container">
+          <canvas id="kecamatanChart"></canvas>
+        </div>
+      </div>
+
+      <!-- ================= DATA KECAMATAN ================= -->
+
+      <div
+        id="dataKecamatanSection"
+        class="card data-kecamatan-section"
+        style="display: none"
+      >
+        <!-- ================= HEADER DATA ================= -->
+
+        <div class="data-kecamatan-header">
+          <div>
+            <span> Data Pemilih </span>
+
+            <h2 id="judulKecamatan">Kecamatan</h2>
+          </div>
+
+          <button id="closeDataBtn" class="back-kabupaten-btn" type="button">
+            <i class="fa-solid fa-arrow-left"></i>
+
+            Kembali
+          </button>
+        </div>
+
+        <!-- ================= TAMBAH DATA ================= -->
+
+        <div class="button-area">
+          <button id="addKecamatanBtn" class="btn-green" type="button">
+            <i class="fa-solid fa-plus"></i>
+
+            Tambah Data
+          </button>
+        </div>
+
+        <!-- ================= SEARCH ================= -->
+
+        <div class="search-box">
+          <input
+            type="text"
+            id="searchKecamatan"
+            placeholder="Cari Nama / NIK / No HP"
+          />
+        </div>
+
+        <!-- ================= DATA LIST ================= -->
+
+        <div id="dataKecamatanList"></div>
+      </div>
+    </main>
+
+    <!-- ====================================================== -->
+    <!-- MODAL TAMBAH / EDIT DATA -->
+    <!-- ====================================================== -->
+
+    <div id="modalKecamatanForm" class="modal">
+      <div class="modal-content">
+        <!-- MODAL HEADER -->
+
+        <div class="modal-header">
+          <h2 id="modalKecamatanTitle">Tambah Data</h2>
+
+          <span id="closeKecamatanModal"> &times; </span>
+        </div>
+
+        <!-- ID -->
+
+        <input type="hidden" id="kecamatanId" />
+
+        <!-- FORM -->
+
+        <div class="form-grid">
+          <!-- NAMA -->
+
+          <input type="text" id="kecamatanNama" placeholder="Nama" />
+
+          <!-- NIK -->
+
+          <input type="text" id="kecamatanNik" placeholder="NIK" />
+
+          <!-- NO HP -->
+
+          <input type="text" id="kecamatanNohp" placeholder="No HP" />
+
+          <!-- RT -->
+
+          <input type="text" id="kecamatanRt" placeholder="RT" />
+
+          <!-- RW -->
+
+          <input type="text" id="kecamatanRw" placeholder="RW" />
+
+          <!-- DUSUN -->
+
+          <input type="text" id="kecamatanDusun" placeholder="Dusun" />
+
+          <!-- DESA -->
+
+          <input type="text" id="kecamatanDesa" placeholder="Desa" />
+
+          <!-- KECAMATAN -->
+
+          <input
+            type="text"
+            id="kecamatanNamaKecamatan"
+            placeholder="Kecamatan"
+          />
+
+          <!-- KABUPATEN -->
+
+          <input
+            type="text"
+            id="kecamatanKabupaten"
+            placeholder="Kabupaten/Kota"
+          />
+
+          <!-- UNSUR -->
+
+          <input type="text" id="kecamatanUnsur" placeholder="Unsur" />
+        </div>
+
+        <!-- SAVE -->
+
+        <button id="saveKecamatanBtn" class="btn-save" type="button">
+          Simpan Data
+        </button>
+      </div>
+    </div>
+
+    <!-- ================= JAVASCRIPT ================= -->
+
+    <script src="js/api.js"></script>
+
+    <script src="js/kecamatan.js"></script>
+  </body>
+</html>

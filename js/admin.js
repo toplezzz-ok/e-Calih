@@ -1,52 +1,130 @@
-// ============================================
-// e-Calih v1.1
+// ======================================================
+// e-Calih v1.4
 // admin.js
-// Statistik Kabupaten + CRUD Admin
-// ============================================
+// Dashboard Admin
+// Statistik Kabupaten
+// Input No HP
+// ======================================================
+
+// ======================================================
+// VARIABEL GLOBAL
+// ======================================================
 
 let dataPemilih = [];
-let modeEdit = false;
-let editId = "";
-let chartKabupaten = null;
 
-// ==============================
+let modeEdit = false;
+
+let editId = "";
+
+let kabupatenChart = null;
+
+// ======================================================
 // START
-// ==============================
+// ======================================================
 
 document.addEventListener("DOMContentLoaded", () => {
-  // CEK LOGIN
+  // ==================================================
+  // CEK LOGIN ADMIN
+  // ==================================================
+
   if (localStorage.getItem("ecalih_login") !== "true") {
     location.href = "index.html";
 
     return;
   }
 
-  // LOAD DATA
+  // ==================================================
+  // LOAD SEMUA DATA
+  // ==================================================
+
   loadData();
 
+  // ==================================================
   // LOGOUT
-  document.getElementById("logoutBtn").onclick = logout;
+  // ==================================================
 
+  const logoutBtn = document.getElementById("logoutBtn");
+
+  if (logoutBtn) {
+    logoutBtn.onclick = logout;
+  }
+
+  // ==================================================
   // SEARCH
-  document.getElementById("searchInput").addEventListener("keyup", cariData);
+  // ==================================================
 
+  const searchInput = document.getElementById("searchInput");
+
+  if (searchInput) {
+    searchInput.addEventListener("keyup", cariData);
+  }
+
+  // ==================================================
   // TAMBAH DATA
-  document.getElementById("addBtn").onclick = bukaTambah;
+  // ==================================================
 
+  const addBtn = document.getElementById("addBtn");
+
+  if (addBtn) {
+    addBtn.onclick = bukaTambah;
+  }
+
+  // ==================================================
   // TUTUP MODAL
-  document.getElementById("closeModal").onclick = tutupModal;
+  // ==================================================
 
+  const closeModal = document.getElementById("closeModal");
+
+  if (closeModal) {
+    closeModal.onclick = tutupModal;
+  }
+
+  // ==================================================
   // SIMPAN DATA
-  document.getElementById("saveBtn").onclick = simpanData;
+  // ==================================================
+
+  const saveBtn = document.getElementById("saveBtn");
+
+  if (saveBtn) {
+    saveBtn.onclick = simpanData;
+  }
+
+  // ==================================================
+  // AKTIFKAN KLIK KABUPATEN
+  // ==================================================
+
+  aktifkanKlikKabupaten();
+
+  // ==================================================
+  // EXPORT EXCEL
+  // ==================================================
+
+  const exportExcelBtn = document.getElementById("exportExcelBtn");
+
+  if (exportExcelBtn) {
+    exportExcelBtn.onclick = exportExcel;
+  }
+
+  // ==================================================
+  // EXPORT PDF
+  // ==================================================
+
+  const exportPdfBtn = document.getElementById("exportPdfBtn");
+
+  if (exportPdfBtn) {
+    exportPdfBtn.onclick = exportPDF;
+  }
 });
 
-// ==============================
+// ======================================================
 // LOAD DATA
-// ==============================
+// ======================================================
 
 async function loadData() {
   Swal.fire({
     title: "Memuat Data...",
+
+    text: "Mengambil data dari database",
 
     allowOutsideClick: false,
 
@@ -60,34 +138,296 @@ async function loadData() {
   Swal.close();
 
   if (!hasil.status) {
-    Swal.fire("Error", "Tidak bisa mengambil data", "error");
+    Swal.fire(
+      "Error",
+
+      "Tidak bisa mengambil data dari server.",
+
+      "error",
+    );
 
     return;
   }
 
+  // ====================================================
   // SIMPAN DATA
-  dataPemilih = hasil.data;
+  // ====================================================
 
-  // TOTAL DATA
-  document.getElementById("totalData").innerHTML = dataPemilih.length;
+  dataPemilih = hasil.data || [];
 
-  // TAMPILKAN DATA
-  tampilkanData(dataPemilih);
+  // ====================================================
+  // UPDATE TOTAL
+  // ====================================================
 
+  updateTotalData();
+
+  // ====================================================
   // UPDATE STATISTIK
-  buatStatistikKabupaten();
+  // ====================================================
+
+  updateStatistik();
+
+  // ====================================================
+  // TAMPILKAN DATA
+  // ====================================================
+
+  tampilkanData(dataPemilih);
 }
 
-// ==============================
+// ======================================================
+// UPDATE TOTAL DATA
+// ======================================================
+
+function updateTotalData() {
+  const totalElement = document.getElementById("totalData");
+
+  if (totalElement) {
+    totalElement.innerHTML = dataPemilih.length;
+  }
+}
+
+// ======================================================
+// UPDATE STATISTIK KABUPATEN
+// ======================================================
+
+function updateStatistik() {
+  let totalNganjuk = 0;
+
+  let totalKabMadiun = 0;
+
+  let totalKotaMadiun = 0;
+
+  dataPemilih.forEach((item) => {
+    const kabupaten = normalisasi(item.kabupaten);
+
+    // ================================================
+    // KABUPATEN NGANJUK
+    // ================================================
+
+    if (kabupaten === "nganjuk" || kabupaten === "kabupaten nganjuk") {
+      totalNganjuk++;
+    }
+
+    // ================================================
+    // KABUPATEN MADIUN
+    // ================================================
+    else if (kabupaten === "madiun" || kabupaten === "kabupaten madiun") {
+      totalKabMadiun++;
+    }
+
+    // ================================================
+    // KOTA MADIUN
+    // ================================================
+    else if (kabupaten === "kota madiun") {
+      totalKotaMadiun++;
+    }
+  });
+
+  // ====================================================
+  // TAMPILKAN JUMLAH
+  // ====================================================
+
+  setText("nganjukTotal", totalNganjuk);
+
+  setText("kabMadiunTotal", totalKabMadiun);
+
+  setText("kotaMadiunTotal", totalKotaMadiun);
+
+  // ====================================================
+  // UPDATE CHART
+  // ====================================================
+
+  updateChart(
+    totalNganjuk,
+
+    totalKabMadiun,
+
+    totalKotaMadiun,
+  );
+}
+
+// ======================================================
+// NORMALISASI TEKS
+// ======================================================
+
+function normalisasi(text) {
+  if (text === null || text === undefined) {
+    return "";
+  }
+
+  return text
+
+    .toString()
+
+    .trim()
+
+    .toLowerCase();
+}
+
+// ======================================================
+// SET TEXT
+// ======================================================
+
+function setText(id, value) {
+  const element = document.getElementById(id);
+
+  if (element) {
+    element.innerHTML = value;
+  }
+}
+
+// ======================================================
+// CHART DOUGHNUT
+// ======================================================
+
+function updateChart(
+  totalNganjuk,
+
+  totalKabMadiun,
+
+  totalKotaMadiun,
+) {
+  const canvas = document.getElementById("kabupatenChart");
+
+  if (!canvas) {
+    return;
+  }
+
+  // ====================================================
+  // HAPUS CHART LAMA
+  // ====================================================
+
+  if (kabupatenChart) {
+    kabupatenChart.destroy();
+  }
+
+  // ====================================================
+  // BUAT CHART
+  // ====================================================
+
+  kabupatenChart = new Chart(
+    canvas,
+
+    {
+      type: "doughnut",
+
+      data: {
+        labels: ["Kabupaten Nganjuk", "Kabupaten Madiun", "Kota Madiun"],
+
+        datasets: [
+          {
+            data: [totalNganjuk, totalKabMadiun, totalKotaMadiun],
+
+            backgroundColor: ["#1f4d36", "#3c7a57", "#74a987"],
+
+            borderWidth: 2,
+
+            borderColor: "#ffffff",
+          },
+        ],
+      },
+
+      options: {
+        responsive: true,
+
+        maintainAspectRatio: false,
+
+        plugins: {
+          legend: {
+            position: "bottom",
+          },
+
+          tooltip: {
+            callbacks: {
+              label: function (context) {
+                const label = context.label || "";
+
+                const value = context.raw || 0;
+
+                const data = context.dataset.data;
+
+                const total = data.reduce(
+                  (
+                    sum,
+
+                    item,
+                  ) => sum + item,
+
+                  0,
+                );
+
+                const percentage =
+                  total > 0 ? ((value / total) * 100).toFixed(1) : 0;
+
+                return [`${label}`, `${percentage}%`, `${value} Data Pemilih`];
+              },
+            },
+          },
+        },
+      },
+    },
+  );
+}
+
+// ======================================================
+// KLIK KABUPATEN
+// ======================================================
+
+function aktifkanKlikKabupaten() {
+  const boxes = document.querySelectorAll(".kabupaten-box");
+
+  boxes.forEach((box) => {
+    // =================================================
+    // CURSOR
+    // =================================================
+
+    box.style.cursor = "pointer";
+
+    // =================================================
+    // EVENT KLIK
+    // =================================================
+
+    box.addEventListener("click", () => {
+      // Ambil nama kabupaten dari data-kabupaten
+      const namaKabupaten = box.dataset.kabupaten;
+
+      // Cek apakah nama kabupaten tersedia
+      if (!namaKabupaten) {
+        Swal.fire("Error", "Nama kabupaten tidak ditemukan.", "error");
+
+        return;
+      }
+
+      console.log("Kabupaten yang dipilih:", namaKabupaten);
+
+      // Simpan ke sessionStorage
+      sessionStorage.setItem("ecalih_kabupaten", namaKabupaten);
+
+      // Pindah ke halaman kecamatan
+      location.href =
+        "kecamatan.html?kabupaten=" + encodeURIComponent(namaKabupaten);
+    });
+  });
+}
+
+// ======================================================
 // TAMPILKAN DATA
-// ==============================
+// ======================================================
 
 function tampilkanData(data) {
   const list = document.getElementById("dataList");
 
+  if (!list) {
+    return;
+  }
+
   list.innerHTML = "";
 
-  if (data.length == 0) {
+  // ====================================================
+  // JIKA TIDAK ADA DATA
+  // ====================================================
+
+  if (data.length === 0) {
     list.innerHTML = `
 
       <div class="empty">
@@ -101,384 +441,336 @@ function tampilkanData(data) {
     return;
   }
 
+  // ====================================================
+  // TAMPILKAN DATA
+  // ====================================================
+
   data.forEach((item) => {
     list.innerHTML += `
 
-      <div class="card-data">
+        <div class="card-data">
 
-        <h3>
-          ${item.nama}
-        </h3>
+          <h3>
 
+            ${item.nama || ""}
 
-        <p>
-          <b>NIK :</b>
-          ${item.nik}
-        </p>
+          </h3>
 
 
-        <p>
-          <b>RT :</b>
-          ${item.rt}
-        </p>
+          <p>
+
+            <b>NIK :</b>
+
+            ${item.nik || ""}
+
+          </p>
 
 
-        <p>
-          <b>RW :</b>
-          ${item.rw}
-        </p>
+          <p>
+
+            <b>No HP :</b>
+
+            ${item.nohp || "-"}
+
+          </p>
 
 
-        <p>
-          <b>Dusun :</b>
-          ${item.dusun}
-        </p>
+          <p>
+
+            <b>RT :</b>
+
+            ${item.rt || ""}
+
+          </p>
 
 
-        <p>
-          <b>Desa :</b>
-          ${item.desa}
-        </p>
+          <p>
+
+            <b>RW :</b>
+
+            ${item.rw || ""}
+
+          </p>
 
 
-        <p>
-          <b>Kecamatan :</b>
-          ${item.kecamatan}
-        </p>
+          <p>
+
+            <b>Dusun :</b>
+
+            ${item.dusun || ""}
+
+          </p>
 
 
-        <p>
-          <b>Kabupaten :</b>
-          ${item.kabupaten}
-        </p>
+          <p>
+
+            <b>Desa :</b>
+
+            ${item.desa || ""}
+
+          </p>
 
 
-        <p>
-          <b>Unsur :</b>
-          ${item.unsur}
-        </p>
+          <p>
+
+            <b>Kecamatan :</b>
+
+            ${item.kecamatan || ""}
+
+          </p>
 
 
-        <div class="action">
+          <p>
 
-          <button
-            class="edit"
-            onclick="editData('${item.id}')"
-          >
+            <b>Kabupaten :</b>
 
-            <i class="fa-solid fa-pen"></i>
+            ${item.kabupaten || ""}
 
-            Edit
-
-          </button>
+          </p>
 
 
-          <button
-            class="delete"
-            onclick="hapusData('${item.id}')"
-          >
+          <p>
 
-            <i class="fa-solid fa-trash"></i>
+            <b>Unsur :</b>
 
-            Hapus
+            ${item.unsur || ""}
 
-          </button>
+          </p>
+
+
+          <div class="action">
+
+
+            <button
+
+              class="edit"
+
+              onclick="editData('${item.id}')"
+
+            >
+
+              <i
+
+                class="fa-solid fa-pen"
+
+              ></i>
+
+              Edit
+
+            </button>
+
+
+            <button
+
+              class="delete"
+
+              onclick="hapusData('${item.id}')"
+
+            >
+
+              <i
+
+                class="fa-solid fa-trash"
+
+              ></i>
+
+              Hapus
+
+            </button>
+
+
+          </div>
+
 
         </div>
 
-
-      </div>
-
-    `;
+      `;
   });
 }
 
-// ==============================
+// ======================================================
 // SEARCH
-// ==============================
+// ======================================================
 
 function cariData() {
-  const keyword = document.getElementById("searchInput").value.toLowerCase();
+  const input = document.getElementById("searchInput");
 
-  const hasil = dataPemilih.filter(
-    (item) =>
-      item.nama.toLowerCase().includes(keyword) ||
-      item.nik.toLowerCase().includes(keyword),
-  );
+  if (!input) {
+    return;
+  }
+
+  const keyword = normalisasi(input.value);
+
+  const hasil = dataPemilih.filter((item) => {
+    return (
+      normalisasi(item.nama).includes(keyword) ||
+      normalisasi(item.nik).includes(keyword) ||
+      normalisasi(item.nohp).includes(keyword)
+    );
+  });
 
   tampilkanData(hasil);
 }
 
-// ==============================
-// STATISTIK KABUPATEN
-// ==============================
-
-function buatStatistikKabupaten() {
-  let nganjuk = 0;
-
-  let kabMadiun = 0;
-
-  let kotaMadiun = 0;
-
-  // HITUNG DATA
-  dataPemilih.forEach((item) => {
-    const kabupaten = String(item.kabupaten || "")
-      .trim()
-      .toLowerCase();
-
-    // NGANJUK
-    if (kabupaten.includes("nganjuk")) {
-      nganjuk++;
-    }
-
-    // KABUPATEN MADIUN
-    else if (
-      kabupaten === "kabupaten madiun" ||
-      kabupaten === "kab. madiun" ||
-      kabupaten === "kab madiun"
-    ) {
-      kabMadiun++;
-    }
-
-    // KOTA MADIUN
-    else if (kabupaten === "kota madiun" || kabupaten === "madiun kota") {
-      kotaMadiun++;
-    }
-  });
-
-  // ==============================
-  // UPDATE ANGKA
-  // ==============================
-
-  const nganjukElement = document.getElementById("nganjukTotal");
-
-  const kabMadiunElement = document.getElementById("kabMadiunTotal");
-
-  const kotaMadiunElement = document.getElementById("kotaMadiunTotal");
-
-  if (nganjukElement) {
-    nganjukElement.innerHTML = nganjuk;
-  }
-
-  if (kabMadiunElement) {
-    kabMadiunElement.innerHTML = kabMadiun;
-  }
-
-  if (kotaMadiunElement) {
-    kotaMadiunElement.innerHTML = kotaMadiun;
-  }
-
-  // ==============================
-  // BUAT DIAGRAM
-  // ==============================
-
-  const canvas = document.getElementById("kabupatenChart");
-
-  if (!canvas) {
-    return;
-  }
-
-  // HAPUS CHART LAMA
-  if (chartKabupaten) {
-    chartKabupaten.destroy();
-  }
-
-  // BUAT CHART BARU
-  chartKabupaten = new Chart(
-    canvas,
-
-    {
-      type: "doughnut",
-
-      data: {
-        labels: ["Kabupaten Nganjuk", "Kabupaten Madiun", "Kota Madiun"],
-
-        datasets: [
-          {
-            data: [nganjuk, kabMadiun, kotaMadiun],
-
-            backgroundColor: ["#123d2a", "#1f6b48", "#81c784"],
-
-            borderColor: "#ffffff",
-
-            borderWidth: 3,
-
-            hoverOffset: 8,
-          },
-        ],
-      },
-
-      options: {
-        responsive: true,
-
-        maintainAspectRatio: false,
-
-        cutout: "65%",
-
-        plugins: {
-          legend: {
-            position: "bottom",
-
-            labels: {
-              padding: 20,
-
-              usePointStyle: true,
-
-              font: {
-                family: "Poppins",
-
-                size: 12,
-              },
-            },
-          },
-
-          tooltip: {
-            callbacks: {
-              label: function (context) {
-                const total = context.dataset.data.reduce(
-                  (a, b) => a + b,
-
-                  0,
-                );
-
-                const value = context.raw;
-
-                let percentage = 0;
-
-                if (total > 0) {
-                  percentage = ((value / total) * 100).toFixed(1);
-                }
-
-                return (
-                  " " +
-                  context.label +
-                  ": " +
-                  value +
-                  " data (" +
-                  percentage +
-                  "%)"
-                );
-              },
-            },
-          },
-        },
-      },
-    },
-  );
-}
-
-// ==============================
-// MODAL
-// ==============================
+// ======================================================
+// BUKA TAMBAH
+// ======================================================
 
 function bukaTambah() {
   modeEdit = false;
 
   editId = "";
 
-  document.getElementById("modalTitle").innerHTML = "Tambah Data";
+  setText(
+    "modalTitle",
+
+    "Tambah Data",
+  );
 
   bersihkanForm();
 
-  document.getElementById("modalForm").classList.add("show");
+  const modal = document.getElementById("modalForm");
+
+  if (modal) {
+    modal.classList.add("show");
+  }
 }
 
+// ======================================================
+// TUTUP MODAL
+// ======================================================
+
 function tutupModal() {
-  document.getElementById("modalForm").classList.remove("show");
+  const modal = document.getElementById("modalForm");
+
+  if (modal) {
+    modal.classList.remove("show");
+  }
 }
+
+// ======================================================
+// KLIK DI LUAR MODAL
+// ======================================================
 
 window.onclick = function (e) {
   const modal = document.getElementById("modalForm");
 
-  if (e.target == modal) {
+  if (modal && e.target === modal) {
     tutupModal();
   }
 };
 
-// ==============================
+// ======================================================
 // BERSIHKAN FORM
-// ==============================
+// ======================================================
 
 function bersihkanForm() {
-  document.getElementById("id").value = "";
+  const fields = [
+    "id",
 
-  document.getElementById("nama").value = "";
+    "nama",
 
-  document.getElementById("nik").value = "";
+    "nik",
 
-  document.getElementById("rt").value = "";
+    "nohp",
 
-  document.getElementById("rw").value = "";
+    "rt",
 
-  document.getElementById("dusun").value = "";
+    "rw",
 
-  document.getElementById("desa").value = "";
+    "dusun",
 
-  document.getElementById("kecamatan").value = "";
+    "desa",
 
-  document.getElementById("kabupaten").value = "";
+    "kecamatan",
 
-  document.getElementById("unsur").value = "";
+    "kabupaten",
+
+    "unsur",
+  ];
+
+  fields.forEach((id) => {
+    const element = document.getElementById(id);
+
+    if (element) {
+      element.value = "";
+    }
+  });
 }
 
-// ==============================
+// ======================================================
 // LOGOUT
-// ==============================
+// ======================================================
 
 function logout() {
   Swal.fire({
-    title: "Logout ?",
+    title: "Logout?",
+
+    text: "Apakah Anda yakin ingin keluar?",
 
     icon: "question",
 
     showCancelButton: true,
 
-    confirmButtonText: "Ya",
+    confirmButtonText: "Ya, Logout",
 
     cancelButtonText: "Batal",
-  })
 
-    .then((result) => {
-      if (result.isConfirmed) {
-        localStorage.removeItem("ecalih_login");
+    confirmButtonColor: "#1f4d36",
+  }).then((result) => {
+    if (result.isConfirmed) {
+      localStorage.removeItem("ecalih_login");
 
-        localStorage.removeItem("ecalih_username");
+      localStorage.removeItem("ecalih_username");
 
-        location.href = "index.html";
-      }
-    });
+      location.href = "index.html";
+    }
+  });
 }
 
-// ==============================
+// ======================================================
 // SIMPAN DATA
-// ==============================
+// ======================================================
 
 async function simpanData() {
   const data = {
+    // ID
     id: editId,
 
+    // NAMA
     nama: document.getElementById("nama").value.trim(),
 
+    // NIK
     nik: document.getElementById("nik").value.trim(),
 
+    // NO HP
+    nohp: document.getElementById("nohp").value.trim(),
+
+    // RT
     rt: document.getElementById("rt").value.trim(),
 
+    // RW
     rw: document.getElementById("rw").value.trim(),
 
+    // DUSUN
     dusun: document.getElementById("dusun").value.trim(),
 
+    // DESA
     desa: document.getElementById("desa").value.trim(),
 
+    // KECAMATAN
     kecamatan: document.getElementById("kecamatan").value.trim(),
 
+    // KABUPATEN
     kabupaten: document.getElementById("kabupaten").value.trim(),
 
+    // UNSUR
     unsur: document.getElementById("unsur").value.trim(),
   };
 
-  // ==============================
+  // ====================================================
   // VALIDASI
-  // ==============================
+  // ====================================================
 
   for (const key in data) {
     if (key !== "id" && data[key] === "") {
@@ -494,12 +786,12 @@ async function simpanData() {
     }
   }
 
-  // ==============================
+  // ====================================================
   // LOADING
-  // ==============================
+  // ====================================================
 
   Swal.fire({
-    title: "Menyimpan...",
+    title: modeEdit ? "Mengupdate Data..." : "Menyimpan Data...",
 
     allowOutsideClick: false,
 
@@ -510,26 +802,26 @@ async function simpanData() {
 
   let hasil;
 
-  // ==============================
+  // ====================================================
   // UPDATE
-  // ==============================
+  // ====================================================
 
   if (modeEdit) {
     hasil = await updateData(data);
   }
 
-  // ==============================
+  // ====================================================
   // INSERT
-  // ==============================
+  // ====================================================
   else {
     hasil = await insertData(data);
   }
 
   Swal.close();
 
-  // ==============================
+  // ====================================================
   // HASIL
-  // ==============================
+  // ====================================================
 
   if (hasil.status) {
     Swal.fire(
@@ -542,8 +834,7 @@ async function simpanData() {
 
     tutupModal();
 
-    // LOAD ULANG DATA
-    loadData();
+    await loadData();
   } else {
     Swal.fire(
       "Gagal",
@@ -555,49 +846,89 @@ async function simpanData() {
   }
 }
 
-// ==============================
+// ======================================================
 // EDIT DATA
-// ==============================
+// ======================================================
 
 function editData(id) {
   const item = dataPemilih.find((x) => x.id == id);
 
   if (!item) {
+    Swal.fire(
+      "Error",
+
+      "Data tidak ditemukan.",
+
+      "error",
+    );
+
     return;
   }
+
+  // ====================================================
+  // MODE EDIT
+  // ====================================================
 
   modeEdit = true;
 
   editId = item.id;
 
-  document.getElementById("modalTitle").innerHTML = "Edit Data";
+  setText(
+    "modalTitle",
 
-  document.getElementById("id").value = item.id;
+    "Edit Data",
+  );
 
-  document.getElementById("nama").value = item.nama;
+  // ====================================================
+  // ISI FORM
+  // ====================================================
 
-  document.getElementById("nik").value = item.nik;
+  const fields = {
+    id: item.id,
 
-  document.getElementById("rt").value = item.rt;
+    nama: item.nama,
 
-  document.getElementById("rw").value = item.rw;
+    nik: item.nik,
 
-  document.getElementById("dusun").value = item.dusun;
+    nohp: item.nohp,
 
-  document.getElementById("desa").value = item.desa;
+    rt: item.rt,
 
-  document.getElementById("kecamatan").value = item.kecamatan;
+    rw: item.rw,
 
-  document.getElementById("kabupaten").value = item.kabupaten;
+    dusun: item.dusun,
 
-  document.getElementById("unsur").value = item.unsur;
+    desa: item.desa,
 
-  document.getElementById("modalForm").classList.add("show");
+    kecamatan: item.kecamatan,
+
+    kabupaten: item.kabupaten,
+
+    unsur: item.unsur,
+  };
+
+  for (const key in fields) {
+    const element = document.getElementById(key);
+
+    if (element) {
+      element.value = fields[key] || "";
+    }
+  }
+
+  // ====================================================
+  // BUKA MODAL
+  // ====================================================
+
+  const modal = document.getElementById("modalForm");
+
+  if (modal) {
+    modal.classList.add("show");
+  }
 }
 
-// ==============================
+// ======================================================
 // HAPUS DATA
-// ==============================
+// ======================================================
 
 async function hapusData(id) {
   const konfirmasi = await Swal.fire({
@@ -609,14 +940,20 @@ async function hapusData(id) {
 
     showCancelButton: true,
 
-    confirmButtonText: "Hapus",
+    confirmButtonText: "Ya, Hapus",
 
     cancelButtonText: "Batal",
+
+    confirmButtonColor: "#d33",
   });
 
   if (!konfirmasi.isConfirmed) {
     return;
   }
+
+  // ====================================================
+  // LOADING
+  // ====================================================
 
   Swal.fire({
     title: "Menghapus...",
@@ -632,6 +969,10 @@ async function hapusData(id) {
 
   Swal.close();
 
+  // ====================================================
+  // HASIL
+  // ====================================================
+
   if (hasil.status) {
     Swal.fire(
       "Berhasil",
@@ -641,9 +982,7 @@ async function hapusData(id) {
       "success",
     );
 
-    // LOAD ULANG DATA
-    // Statistik otomatis ikut diperbarui
-    loadData();
+    await loadData();
   } else {
     Swal.fire(
       "Gagal",
@@ -655,6 +994,188 @@ async function hapusData(id) {
   }
 }
 
-// ==============================
-// END
-// ==============================
+// ======================================================
+// EXPORT EXCEL
+// ======================================================
+
+function exportExcel() {
+  if (!dataPemilih || dataPemilih.length === 0) {
+    Swal.fire("Informasi", "Belum ada data pemilih untuk diekspor.", "info");
+
+    return;
+  }
+
+  // Siapkan data untuk Excel
+  const dataExport = dataPemilih.map((item, index) => {
+    return {
+      No: index + 1,
+      Nama: item.nama || "",
+      NIK: item.nik || "",
+      "No HP": item.nohp || "",
+      RT: item.rt || "",
+      RW: item.rw || "",
+      Dusun: item.dusun || "",
+      Desa: item.desa || "",
+      Kecamatan: item.kecamatan || "",
+      Kabupaten: item.kabupaten || "",
+      Unsur: item.unsur || "",
+    };
+  });
+
+  // Buat worksheet
+  const worksheet = XLSX.utils.json_to_sheet(dataExport);
+
+  // Buat workbook
+  const workbook = XLSX.utils.book_new();
+
+  XLSX.utils.book_append_sheet(workbook, worksheet, "Data Pemilih");
+
+  // Atur lebar kolom
+  worksheet["!cols"] = [
+    { wch: 6 },
+    { wch: 25 },
+    { wch: 20 },
+    { wch: 18 },
+    { wch: 8 },
+    { wch: 8 },
+    { wch: 20 },
+    { wch: 20 },
+    { wch: 20 },
+    { wch: 25 },
+    { wch: 20 },
+  ];
+
+  // Nama file
+  const tanggal = new Date().toISOString().slice(0, 10);
+
+  XLSX.writeFile(workbook, `e-Calih_Data_Pemilih_${tanggal}.xlsx`);
+
+  Swal.fire("Berhasil", "Data pemilih berhasil diekspor ke Excel.", "success");
+}
+
+// ======================================================
+// EXPORT PDF
+// ======================================================
+
+function exportPDF() {
+  if (!dataPemilih || dataPemilih.length === 0) {
+    Swal.fire("Informasi", "Belum ada data pemilih untuk diekspor.", "info");
+
+    return;
+  }
+
+  const { jsPDF } = window.jspdf;
+
+  // Buat PDF landscape
+  const doc = new jsPDF({
+    orientation: "landscape",
+    unit: "mm",
+    format: "a4",
+  });
+
+  // ==================================================
+  // JUDUL
+  // ==================================================
+
+  doc.setFontSize(18);
+
+  doc.text("e-Calih - Data Calon Pemilih", 14, 15);
+
+  // ==================================================
+  // INFORMASI
+  // ==================================================
+
+  doc.setFontSize(10);
+
+  doc.text("Total Data Pemilih: " + dataPemilih.length + " Orang", 14, 22);
+
+  const tanggal = new Date().toLocaleDateString("id-ID");
+
+  doc.text("Tanggal Export: " + tanggal, 14, 28);
+
+  // ==================================================
+  // DATA TABEL
+  // ==================================================
+
+  const rows = dataPemilih.map((item, index) => {
+    return [
+      index + 1,
+      item.nama || "",
+      item.nik || "",
+      item.nohp || "-",
+      item.rt || "",
+      item.rw || "",
+      item.dusun || "",
+      item.desa || "",
+      item.kecamatan || "",
+      item.kabupaten || "",
+      item.unsur || "",
+    ];
+  });
+
+  // ==================================================
+  // TABEL
+  // ==================================================
+
+  doc.autoTable({
+    startY: 34,
+
+    head: [
+      [
+        "No",
+        "Nama",
+        "NIK",
+        "No HP",
+        "RT",
+        "RW",
+        "Dusun",
+        "Desa",
+        "Kecamatan",
+        "Kabupaten",
+        "Unsur",
+      ],
+    ],
+
+    body: rows,
+
+    styles: {
+      fontSize: 7,
+      cellPadding: 2,
+    },
+
+    headStyles: {
+      fontSize: 7,
+    },
+
+    margin: {
+      left: 10,
+      right: 10,
+    },
+
+    didDrawPage: function () {
+      const pageNumber = doc.internal.getNumberOfPages();
+
+      doc.setFontSize(8);
+
+      doc.text(
+        "e-Calih | Halaman " + pageNumber,
+        14,
+        doc.internal.pageSize.height - 8,
+      );
+    },
+  });
+
+  // ==================================================
+  // SIMPAN PDF
+  // ==================================================
+
+  const tanggalFile = new Date().toISOString().slice(0, 10);
+
+  doc.save(`e-Calih_Data_Pemilih_${tanggalFile}.pdf`);
+
+  Swal.fire("Berhasil", "Data pemilih berhasil diekspor ke PDF.", "success");
+}
+
+// ======================================================
+// END ADMIN.JS
+// ======================================================

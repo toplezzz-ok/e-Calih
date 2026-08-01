@@ -2,9 +2,10 @@
 <html lang="id">
   <head>
     <meta charset="UTF-8" />
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <title>Dashboard Admin | e-Calih</title>
+    <title>Admin e-Calih</title>
 
     <!-- CSS -->
     <link rel="stylesheet" href="css/style.css" />
@@ -68,9 +69,13 @@
         <!-- ================= KARTU KABUPATEN ================= -->
 
         <div class="kabupaten-stats">
-          <!-- NGANJUK -->
+          <!-- ================= NGANJUK ================= -->
 
-          <div class="kabupaten-box">
+          <div
+            class="kabupaten-box"
+            id="kabupatenNganjuk"
+            data-kabupaten="Kabupaten Nganjuk"
+          >
             <div class="kabupaten-icon">
               <i class="fa-solid fa-location-dot"></i>
             </div>
@@ -80,13 +85,21 @@
 
               <h2 id="nganjukTotal">0</h2>
 
-              <span>Data Pemilih</span>
+              <span> Data Pemilih </span>
+            </div>
+
+            <div class="kabupaten-arrow">
+              <i class="fa-solid fa-chevron-right"></i>
             </div>
           </div>
 
-          <!-- KABUPATEN MADIUN -->
+          <!-- ================= KABUPATEN MADIUN ================= -->
 
-          <div class="kabupaten-box">
+          <div
+            class="kabupaten-box"
+            id="kabupatenMadiun"
+            data-kabupaten="Kabupaten Madiun"
+          >
             <div class="kabupaten-icon">
               <i class="fa-solid fa-location-dot"></i>
             </div>
@@ -96,13 +109,21 @@
 
               <h2 id="kabMadiunTotal">0</h2>
 
-              <span>Data Pemilih</span>
+              <span> Data Pemilih </span>
+            </div>
+
+            <div class="kabupaten-arrow">
+              <i class="fa-solid fa-chevron-right"></i>
             </div>
           </div>
 
-          <!-- KOTA MADIUN -->
+          <!-- ================= KOTA MADIUN ================= -->
 
-          <div class="kabupaten-box">
+          <div
+            class="kabupaten-box"
+            id="kotaMadiun"
+            data-kabupaten="Kota Madiun"
+          >
             <div class="kabupaten-icon">
               <i class="fa-solid fa-location-dot"></i>
             </div>
@@ -112,9 +133,41 @@
 
               <h2 id="kotaMadiunTotal">0</h2>
 
-              <span>Data Pemilih</span>
+              <span> Data Pemilih </span>
+            </div>
+
+            <div class="kabupaten-arrow">
+              <i class="fa-solid fa-chevron-right"></i>
             </div>
           </div>
+        </div>
+
+        <!-- ================= DAFTAR KECAMATAN ================= -->
+
+        <div
+          id="kecamatanSection"
+          class="kecamatan-section"
+          style="display: none"
+        >
+          <!-- HEADER KECAMATAN -->
+
+          <div class="kecamatan-header">
+            <button
+              id="backKabupatenBtn"
+              class="back-kabupaten-btn"
+              type="button"
+            >
+              <i class="fa-solid fa-arrow-left"></i>
+
+              Kembali
+            </button>
+
+            <h2 id="kecamatanTitle">Daftar Kecamatan</h2>
+          </div>
+
+          <!-- LIST KECAMATAN -->
+
+          <div id="kecamatanList" class="kecamatan-list"></div>
         </div>
 
         <!-- ================= DIAGRAM ================= -->
@@ -135,8 +188,17 @@
       <div class="button-area">
         <button id="addBtn" class="btn-green">
           <i class="fa-solid fa-plus"></i>
-
           Tambah Data
+        </button>
+
+        <button id="exportExcelBtn" class="btn-green">
+          <i class="fa-solid fa-file-excel"></i>
+          Export Excel
+        </button>
+
+        <button id="exportPdfBtn" class="btn-green">
+          <i class="fa-solid fa-file-pdf"></i>
+          Export PDF
         </button>
       </div>
 
@@ -168,6 +230,13 @@
 
           <input type="text" id="nik" placeholder="NIK" />
 
+          <input
+            type="tel"
+            id="nohp"
+            placeholder="Nomor HP"
+            inputmode="numeric"
+          />
+
           <input type="text" id="rt" placeholder="RT" />
 
           <input type="text" id="rw" placeholder="RW" />
@@ -188,7 +257,16 @@
         <button id="saveBtn" class="btn-save">Simpan Data</button>
       </div>
     </div>
+    <!-- ================= EXPORT LIBRARY ================= -->
 
+    <!-- SheetJS / Excel -->
+    <script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
+
+    <!-- jsPDF -->
+    <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+
+    <!-- jsPDF AutoTable -->
+    <script src="https://cdn.jsdelivr.net/npm/jspdf-autotable@3.8.2/dist/jspdf.plugin.autotable.min.js"></script>
     <!-- ================= JAVASCRIPT ================= -->
 
     <script src="js/api.js"></script>

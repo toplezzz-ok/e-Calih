@@ -1076,3 +1076,1116 @@ body {
     font-size: 12px;
   }
 }
+/* =====================================================
+   MODAL STATISTIK KECAMATAN
+===================================================== */
+
+.kecamatan-modal {
+  text-align: left;
+}
+
+.kecamatan-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 5px 5px 18px;
+  border-bottom: 1px solid #e5ebe7;
+  margin-bottom: 18px;
+}
+
+.kecamatan-header-icon {
+  width: 48px;
+  height: 48px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: #123d2a;
+  color: white;
+
+  border-radius: 12px;
+
+  font-size: 20px;
+}
+
+.kecamatan-header-text h3 {
+  margin: 0;
+
+  color: #123d2a;
+
+  font-size: 17px;
+  font-weight: 700;
+}
+
+.kecamatan-header-text p {
+  margin: 3px 0 0;
+
+  color: #8a9490;
+
+  font-size: 12px;
+}
+
+/* =====================================================
+   GRID KECAMATAN
+===================================================== */
+
+.kecamatan-grid {
+  display: grid;
+
+  grid-template-columns: repeat(2, 1fr);
+
+  gap: 12px;
+
+  max-height: 430px;
+
+  overflow-y: auto;
+
+  padding: 4px;
+}
+
+/* =====================================================
+   KARTU KECAMATAN
+===================================================== */
+
+.kecamatan-item {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  gap: 12px;
+
+  padding: 15px;
+
+  background: #f7faf8;
+
+  border: 1px solid #e2ebe5;
+
+  border-radius: 12px;
+
+  cursor: pointer;
+
+  transition: all 0.25s ease;
+
+  text-align: left;
+}
+
+.kecamatan-item:hover {
+  background: #ffffff;
+
+  border-color: #1f6b48;
+
+  transform: translateY(-2px);
+
+  box-shadow: 0 7px 18px rgba(18, 61, 42, 0.1);
+}
+
+/* =====================================================
+   INFO KECAMATAN
+===================================================== */
+
+.kecamatan-info {
+  display: flex;
+
+  align-items: center;
+
+  gap: 10px;
+
+  min-width: 0;
+}
+
+.kecamatan-icon {
+  width: 38px;
+
+  height: 38px;
+
+  min-width: 38px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  background: #e3eee8;
+
+  color: #123d2a;
+
+  border-radius: 10px;
+
+  font-size: 14px;
+}
+
+.kecamatan-name {
+  color: #26332d;
+
+  font-size: 13px;
+
+  font-weight: 600;
+
+  line-height: 1.4;
+}
+
+/* =====================================================
+   BADGE JUMLAH DATA
+===================================================== */
+
+.kecamatan-count {
+  display: inline-flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  min-width: 42px;
+
+  padding: 5px 9px;
+
+  background: #123d2a;
+
+  color: white;
+
+  border-radius: 20px;
+
+  font-size: 11px;
+
+  font-weight: 600;
+
+  white-space: nowrap;
+}
+
+/* =====================================================
+   TOMBOL KECAMATAN
+===================================================== */
+
+.kecamatan-arrow {
+  color: #8a9490;
+
+  font-size: 12px;
+
+  transition: 0.2s;
+}
+
+.kecamatan-item:hover .kecamatan-arrow {
+  color: #123d2a;
+
+  transform: translateX(3px);
+}
+
+/* =====================================================
+   SCROLLBAR
+===================================================== */
+
+.kecamatan-grid::-webkit-scrollbar {
+  width: 6px;
+}
+
+.kecamatan-grid::-webkit-scrollbar-track {
+  background: #f1f5f3;
+
+  border-radius: 10px;
+}
+
+.kecamatan-grid::-webkit-scrollbar-thumb {
+  background: #b9d3c2;
+
+  border-radius: 10px;
+}
+
+.kecamatan-grid::-webkit-scrollbar-thumb:hover {
+  background: #1f6b48;
+}
+
+/* =====================================================
+   RESPONSIVE KECAMATAN
+===================================================== */
+
+@media (max-width: 600px) {
+  .kecamatan-grid {
+    grid-template-columns: 1fr;
+
+    max-height: 400px;
+  }
+
+  .kecamatan-item {
+    padding: 13px;
+  }
+
+  .kecamatan-name {
+    font-size: 12px;
+  }
+}
+/* =====================================================
+   POPUP STATISTIK KECAMATAN
+===================================================== */
+
+.kecamatan-popup {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-height: 450px;
+  overflow-y: auto;
+  padding: 5px;
+  text-align: left;
+}
+
+/* =========================
+   KARTU KECAMATAN
+========================= */
+
+.kecamatan-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 14px 16px;
+
+  background: #f7faf8;
+
+  border: 1px solid #e2ebe5;
+
+  border-radius: 12px;
+
+  cursor: pointer;
+
+  transition: all 0.25s ease;
+}
+
+.kecamatan-item:hover {
+  background: #edf5f0;
+
+  border-color: #b9d3c2;
+
+  transform: translateY(-2px);
+
+  box-shadow: 0 5px 15px rgba(18, 61, 42, 0.08);
+}
+
+/* =========================
+   NAMA KECAMATAN
+========================= */
+
+.kecamatan-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.kecamatan-icon {
+  width: 40px;
+  height: 40px;
+
+  border-radius: 10px;
+
+  background: #123d2a;
+
+  color: white;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 15px;
+}
+
+.kecamatan-name {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.kecamatan-name strong {
+  color: #123d2a;
+
+  font-size: 14px;
+
+  font-weight: 600;
+}
+
+.kecamatan-name span {
+  color: #8a9490;
+
+  font-size: 11px;
+}
+
+/* =========================
+   JUMLAH DATA
+========================= */
+
+.kecamatan-total {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  color: #1f6b48;
+
+  font-size: 13px;
+
+  font-weight: 600;
+}
+
+.kecamatan-total i {
+  font-size: 12px;
+}
+
+/* =========================
+   PANAH
+========================= */
+
+.kecamatan-arrow {
+  color: #1f6b48;
+
+  font-size: 14px;
+
+  margin-left: 8px;
+
+  transition: 0.25s;
+}
+
+.kecamatan-item:hover .kecamatan-arrow {
+  transform: translateX(4px);
+}
+
+/* =====================================================
+   POPUP DATA PEMILIH PER KECAMATAN
+===================================================== */
+
+.data-kecamatan-popup {
+  max-height: 500px;
+
+  overflow-y: auto;
+
+  padding: 5px;
+
+  text-align: left;
+}
+
+/* =========================
+   HEADER POPUP DATA
+========================= */
+
+.data-kecamatan-header {
+  background: linear-gradient(135deg, #123d2a, #1f6b48);
+
+  color: white;
+
+  padding: 16px;
+
+  border-radius: 12px;
+
+  margin-bottom: 15px;
+
+  text-align: center;
+}
+
+.data-kecamatan-header h3 {
+  margin: 0;
+
+  font-size: 18px;
+}
+
+.data-kecamatan-header p {
+  margin: 5px 0 0;
+
+  font-size: 12px;
+
+  opacity: 0.85;
+}
+
+/* =========================
+   CARD DATA PEMILIH
+========================= */
+
+.data-kecamatan-card {
+  background: #f7faf8;
+
+  border: 1px solid #e2ebe5;
+
+  border-radius: 12px;
+
+  padding: 15px;
+
+  margin-bottom: 10px;
+
+  transition: 0.25s;
+}
+
+.data-kecamatan-card:hover {
+  border-color: #b9d3c2;
+
+  box-shadow: 0 5px 15px rgba(18, 61, 42, 0.08);
+}
+
+/* =========================
+   NAMA PEMILIH
+========================= */
+
+.data-kecamatan-card h4 {
+  color: #123d2a;
+
+  font-size: 15px;
+
+  margin-bottom: 8px;
+
+  padding-bottom: 8px;
+
+  border-bottom: 1px solid #e2ebe5;
+}
+
+/* =========================
+   DETAIL DATA
+========================= */
+
+.data-kecamatan-card p {
+  color: #5f6964;
+
+  font-size: 12px;
+
+  margin: 4px 0;
+
+  line-height: 1.5;
+}
+
+.data-kecamatan-card p b {
+  color: #26332d;
+}
+
+/* =====================================================
+   RESPONSIVE POPUP
+===================================================== */
+
+@media (max-width: 600px) {
+  .kecamatan-item {
+    padding: 12px;
+  }
+
+  .kecamatan-icon {
+    width: 36px;
+    height: 36px;
+
+    font-size: 13px;
+  }
+
+  .kecamatan-name strong {
+    font-size: 13px;
+  }
+
+  .kecamatan-total {
+    font-size: 11px;
+  }
+
+  .data-kecamatan-card {
+    padding: 12px;
+  }
+}
+/* =====================================================
+   SECTION KECAMATAN
+===================================================== */
+
+.kecamatan-section {
+  margin-top: 30px;
+  padding-top: 25px;
+  border-top: 1px solid #e5ebe7;
+}
+
+/* =====================================================
+   HEADER KECAMATAN
+===================================================== */
+
+.kecamatan-header {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 25px;
+}
+
+.kecamatan-header h2 {
+  color: #123d2a;
+  font-size: 21px;
+  font-weight: 600;
+  margin: 0;
+}
+
+/* =====================================================
+   TOMBOL KEMBALI
+===================================================== */
+
+.back-kabupaten-btn {
+  border: none;
+
+  background: #123d2a;
+  color: white;
+
+  padding: 10px 16px;
+
+  border-radius: 9px;
+
+  font-family: "Poppins", sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  transition: all 0.3s ease;
+}
+
+.back-kabupaten-btn:hover {
+  background: #1f6b48;
+
+  transform: translateY(-2px);
+
+  box-shadow: 0 5px 12px rgba(18, 61, 42, 0.2);
+}
+
+/* =====================================================
+   GRID KECAMATAN
+===================================================== */
+
+.kecamatan-list {
+  display: grid;
+
+  grid-template-columns: repeat(3, 1fr);
+
+  gap: 18px;
+
+  margin-bottom: 30px;
+}
+
+/* =====================================================
+   KARTU KECAMATAN
+===================================================== */
+
+.kecamatan-box {
+  background: #f7faf8;
+
+  border: 1px solid #e2ebe5;
+
+  border-radius: 14px;
+
+  padding: 20px;
+
+  min-width: 0;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 15px;
+
+  cursor: pointer;
+
+  transition: all 0.3s ease;
+}
+
+.kecamatan-box:hover {
+  transform: translateY(-3px);
+
+  box-shadow: 0 8px 20px rgba(18, 61, 42, 0.08);
+
+  border-color: #b9d3c2;
+
+  background: #f4f9f6;
+}
+
+/* =====================================================
+   ICON KECAMATAN
+===================================================== */
+
+.kecamatan-icon {
+  width: 48px;
+
+  height: 48px;
+
+  min-width: 48px;
+
+  border-radius: 12px;
+
+  background: #123d2a;
+
+  color: white;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  font-size: 19px;
+}
+
+/* =====================================================
+   INFORMASI KECAMATAN
+===================================================== */
+
+.kecamatan-info {
+  flex: 1;
+
+  min-width: 0;
+}
+
+.kecamatan-info h4 {
+  color: #4b5563;
+
+  font-size: 13px;
+
+  font-weight: 500;
+
+  margin-bottom: 3px;
+
+  white-space: nowrap;
+
+  overflow: hidden;
+
+  text-overflow: ellipsis;
+}
+
+.kecamatan-info h2 {
+  color: #123d2a;
+
+  font-size: 26px;
+
+  font-weight: 700;
+
+  line-height: 1.2;
+
+  margin-bottom: 2px;
+}
+
+.kecamatan-info span {
+  color: #8a9490;
+
+  font-size: 11px;
+}
+
+/* =====================================================
+   PANAH KECAMATAN
+===================================================== */
+
+.kecamatan-arrow {
+  color: #123d2a;
+
+  font-size: 18px;
+
+  margin-left: auto;
+
+  flex-shrink: 0;
+}
+
+/* =====================================================
+   CHART KECAMATAN
+===================================================== */
+
+.kecamatan-chart-container {
+  width: 100%;
+
+  max-width: 550px;
+
+  height: 400px;
+
+  margin: 10px auto 0;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  position: relative;
+}
+
+.kecamatan-chart-container canvas {
+  max-width: 100%;
+
+  max-height: 100%;
+}
+
+/* =====================================================
+   RESPONSIVE TABLET
+===================================================== */
+
+@media (max-width: 900px) {
+  .kecamatan-list {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* =====================================================
+   RESPONSIVE HP
+===================================================== */
+
+@media (max-width: 600px) {
+  .kecamatan-header {
+    flex-direction: column;
+
+    align-items: stretch;
+  }
+
+  .kecamatan-header h2 {
+    font-size: 18px;
+  }
+
+  .back-kabupaten-btn {
+    width: fit-content;
+  }
+
+  .kecamatan-list {
+    grid-template-columns: 1fr;
+
+    gap: 12px;
+  }
+
+  .kecamatan-box {
+    padding: 16px;
+  }
+
+  .kecamatan-chart-container {
+    height: 300px;
+
+    max-width: 100%;
+  }
+}
+/* =====================================================
+   HALAMAN KECAMATAN
+===================================================== */
+
+.kecamatan-page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  background: linear-gradient(135deg, #123d2a, #1f6b48);
+
+  color: white;
+
+  min-height: 150px;
+}
+
+.kecamatan-page-header h1 {
+  font-size: 30px;
+  font-weight: 700;
+
+  margin-top: 5px;
+}
+
+.kecamatan-page-header p {
+  font-size: 13px;
+
+  opacity: 0.85;
+
+  margin-top: 5px;
+}
+
+.kecamatan-label {
+  font-size: 13px;
+
+  opacity: 0.75;
+
+  font-weight: 500;
+}
+
+/* =====================================================
+   KARTU KECAMATAN
+===================================================== */
+
+.kecamatan-box {
+  cursor: pointer;
+
+  position: relative;
+
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease,
+    border-color 0.3s ease;
+}
+
+.kecamatan-box:hover {
+  transform: translateY(-4px);
+
+  box-shadow: 0 10px 25px rgba(18, 61, 42, 0.12);
+
+  border-color: #b9d3c2;
+}
+
+.kecamatan-card-text {
+  flex: 1;
+
+  min-width: 0;
+}
+
+.kecamatan-card-text h4 {
+  white-space: nowrap;
+
+  overflow: hidden;
+
+  text-overflow: ellipsis;
+}
+
+.kabupaten-arrow {
+  margin-left: auto;
+
+  color: #123d2a;
+
+  font-size: 18px;
+
+  transition: transform 0.3s ease;
+}
+
+.kecamatan-box:hover .kabupaten-arrow {
+  transform: translateX(4px);
+}
+
+/* =====================================================
+   HEADER DATA KECAMATAN
+===================================================== */
+
+.data-kecamatan-header {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  gap: 20px;
+
+  margin-bottom: 25px;
+
+  padding-bottom: 20px;
+
+  border-bottom: 1px solid #e5ebe7;
+}
+
+.data-kecamatan-header span {
+  color: #8a9490;
+
+  font-size: 12px;
+}
+
+.data-kecamatan-header h2 {
+  color: #123d2a;
+
+  font-size: 22px;
+
+  margin-top: 3px;
+}
+
+/* =====================================================
+   TOMBOL KEMBALI
+===================================================== */
+
+.back-kabupaten-btn {
+  border: none;
+
+  background: #123d2a;
+
+  color: white;
+
+  padding: 10px 16px;
+
+  border-radius: 9px;
+
+  font-family: "Poppins", sans-serif;
+
+  font-size: 13px;
+
+  font-weight: 500;
+
+  cursor: pointer;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 8px;
+
+  transition: 0.3s;
+}
+
+.back-kabupaten-btn:hover {
+  background: #1f6b48;
+
+  transform: translateY(-2px);
+}
+
+/* =====================================================
+   DATA KECAMATAN LIST
+===================================================== */
+
+#dataKecamatanList {
+  display: grid;
+
+  grid-template-columns: repeat(2, 1fr);
+
+  gap: 20px;
+}
+
+/* =====================================================
+   RESPONSIVE
+===================================================== */
+
+@media (max-width: 900px) {
+  #kecamatanStats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  #dataKecamatanList {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  .kecamatan-page-header {
+    min-height: 130px;
+  }
+
+  .kecamatan-page-header h1 {
+    font-size: 23px;
+  }
+
+  .data-kecamatan-header {
+    align-items: flex-start;
+
+    flex-direction: column;
+  }
+
+  .back-kabupaten-btn {
+    width: 100%;
+
+    justify-content: center;
+  }
+
+  #kecamatanStats {
+    grid-template-columns: 1fr;
+  }
+
+  #dataKecamatanList {
+    grid-template-columns: 1fr;
+  }
+}
+/* Header Data Pemilih */
+.data-kecamatan-header span,
+#judulKecamatan {
+  color: #ffffff !important;
+}
+/* Perbaikan posisi header Data Pemilih */
+.data-kecamatan-header {
+  text-align: left;
+}
+
+.data-kecamatan-header > div {
+  text-align: left;
+  margin-left: 0;
+  padding-left: 0;
+}
+
+.data-kecamatan-header span {
+  display: block;
+  text-align: left;
+  color: #ffffff !important;
+}
+
+#judulKecamatan {
+  text-align: left;
+  color: #ffffff !important;
+  margin-left: 0;
+}
+
+/* ======================================================
+   BUTTON AREA ADMIN
+   ====================================================== */
+
+.button-area {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 12px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+/* Semua tombol di area button */
+
+.button-area button {
+  border: none;
+  border-radius: 10px;
+  padding: 12px 18px;
+  min-height: 46px;
+
+  font-family: "Poppins", sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    opacity 0.2s ease;
+}
+
+/* ======================================================
+   TAMBAH DATA - BIRU
+   ====================================================== */
+
+#addBtn {
+  background: #2563eb;
+  color: white;
+}
+
+/* ======================================================
+   EXPORT EXCEL - HIJAU
+   ====================================================== */
+
+#exportExcelBtn {
+  background: #1f6b48;
+  color: white;
+}
+
+/* ======================================================
+   EXPORT PDF - MERAH
+   ====================================================== */
+
+#exportPdfBtn {
+  background: #dc3545;
+  color: white;
+}
+
+/* ======================================================
+   HOVER
+   ====================================================== */
+
+.button-area button:hover {
+  transform: translateY(-2px);
+
+  box-shadow: 0 5px 12px rgba(0, 0, 0, 0.15);
+}
+
+.button-area button:active {
+  transform: translateY(0);
+}
+
+/* ======================================================
+   RESPONSIVE HP
+   ====================================================== */
+
+@media (max-width: 600px) {
+  .button-area {
+    justify-content: stretch;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .button-area button {
+    width: 100%;
+  }
+}
